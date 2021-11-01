@@ -1,7 +1,7 @@
 package com.example.pl_mvvmnewsapp.api
 
 import com.example.pl_mvvmnewsapp.BuildConfig
-import com.example.pl_mvvmnewsapp.NewsResponse
+import com.example.pl_mvvmnewsapp.models.NewsResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
