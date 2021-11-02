@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/SargisKhlopuzyan/AndroidStudioProjects/PL_MVVMNewsApp/app/src/main/res/layout/activity_news.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/SargisKhlopuzyan/AndroidStudioProjects/PL_MVVMNewsApp/app/src/main/res/layout/fragment_breaking_news.xml" value="0.1539855072463768" />
+        <entry key="..\:/Users/SargisKhlopuzyan/AndroidStudioProjects/PL_MVVMNewsApp/app/src/main/res/layout/fragment_saved_news.xml" value="0.2058363731109953" />
         <entry key="..\:/Users/SargisKhlopuzyan/AndroidStudioProjects/PL_MVVMNewsApp/app/src/main/res/layout/fragment_search_news.xml" value="0.1539855072463768" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.340625" />
         <entry key="app/src/main/res/layout/activity_news.xml" value="0.19791666666666666" />
