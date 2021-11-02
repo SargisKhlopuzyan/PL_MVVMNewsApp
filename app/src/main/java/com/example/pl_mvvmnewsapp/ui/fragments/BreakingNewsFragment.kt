@@ -22,7 +22,7 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
 
     val TAG = "BreakingNewsFragment"
 
-//        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    //        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 //            super.onViewCreated(view, savedInstanceState)
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
