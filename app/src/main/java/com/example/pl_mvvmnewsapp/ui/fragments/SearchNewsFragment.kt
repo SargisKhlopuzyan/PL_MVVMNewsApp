@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.AbsListView
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -16,7 +17,6 @@ import com.example.pl_mvvmnewsapp.ui.NewsViewModel
 import com.example.pl_mvvmnewsapp.util.Constants
 import com.example.pl_mvvmnewsapp.util.Constants.Companion.SEARCH_NEWS_TIME_DELAY
 import com.example.pl_mvvmnewsapp.util.Resource
-import kotlinx.android.synthetic.main.fragment_breaking_news.*
 import kotlinx.android.synthetic.main.fragment_search_news.*
 import kotlinx.android.synthetic.main.fragment_search_news.paginationProgressBar
 import kotlinx.coroutines.Job
@@ -26,10 +26,10 @@ import kotlinx.coroutines.launch
 
 class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
 
-    val TAG = "SearchNewsFragment"
-
     lateinit var viewModel: NewsViewModel
-    lateinit var newsAdapter: NewsAdapter
+    private lateinit var newsAdapter: NewsAdapter
+
+    private val TAG = "SearchNewsFragment"
 
     //    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 //        super.onViewCreated(view, savedInstanceState)
@@ -71,8 +71,8 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
                         newsAdapter.differ.submitList(newsResponse.articles.toList())
                         val totalPages = newsResponse.totalResults / Constants.QUERY_PAGE_SIZE + 2
                         isLastPage = viewModel.searchNewsPage == totalPages
-                        if(isLastPage) {
-                            rvSearchNews.setPadding(0,0,0,0)
+                        if (isLastPage) {
+                            rvSearchNews.setPadding(0, 0, 0, 0)
                         }
                     }
                 }
@@ -80,6 +80,8 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
                     hideProgressBar()
                     response.message?.let { message ->
                         Log.e(TAG, "An error occurred: $message")
+                        Toast.makeText(activity, "An error occurred $message", Toast.LENGTH_LONG)
+                            .show()
                     }
                 }
                 is Resource.Loading -> {
