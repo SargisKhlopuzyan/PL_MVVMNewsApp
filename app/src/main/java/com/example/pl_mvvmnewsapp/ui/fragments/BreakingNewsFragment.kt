@@ -1,12 +1,11 @@
 package com.example.pl_mvvmnewsapp.ui.fragments
 
-import android.content.AbstractThreadedSyncAdapter
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.AbsListView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,18 +13,16 @@ import com.example.pl_mvvmnewsapp.R
 import com.example.pl_mvvmnewsapp.adapters.NewsAdapter
 import com.example.pl_mvvmnewsapp.ui.NewsActivity
 import com.example.pl_mvvmnewsapp.ui.NewsViewModel
-import com.example.pl_mvvmnewsapp.util.Constants
 import com.example.pl_mvvmnewsapp.util.Constants.Companion.QUERY_PAGE_SIZE
 import com.example.pl_mvvmnewsapp.util.Resource
 import kotlinx.android.synthetic.main.fragment_breaking_news.*
-import retrofit2.Response
 
 class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
 
     lateinit var viewModel: NewsViewModel
-    lateinit var newsAdapter: NewsAdapter
+    private lateinit var newsAdapter: NewsAdapter
 
-    val TAG = "BreakingNewsFragment"
+    private val TAG = "BreakingNewsFragment"
 
     //        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 //            super.onViewCreated(view, savedInstanceState)
@@ -54,8 +51,8 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                         newsAdapter.differ.submitList(newsResponse.articles.toList())
                         val totalPages = newsResponse.totalResults / QUERY_PAGE_SIZE + 2
                         isLastPage = viewModel.breakingNewsPage == totalPages
-                        if(isLastPage) {
-                            rvBreakingNews.setPadding(0,0,0,0)
+                        if (isLastPage) {
+                            rvBreakingNews.setPadding(0, 0, 0, 0)
                         }
                     }
                 }
@@ -63,6 +60,8 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                     hideProgressBar()
                     response.message?.let { message ->
                         Log.e(TAG, "An error occurred: $message")
+                        Toast.makeText(activity, "An error occurred $message", Toast.LENGTH_LONG)
+                            .show()
                     }
                 }
                 is Resource.Loading -> {
@@ -86,10 +85,10 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
     var isLastPage = false
     var isScrolling = false
 
-    private val scrollListener = object: RecyclerView.OnScrollListener() {
+    private val scrollListener = object : RecyclerView.OnScrollListener() {
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
             super.onScrollStateChanged(recyclerView, newState)
-            if(newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+            if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
                 isScrolling = true
             }
         }
@@ -105,9 +104,10 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
             val isAtLastItem = firstVisibleItemPosition + visibleItemCount >= totalItemCount
             val isNotAtBeginning = firstVisibleItemPosition >= 0
             val isTotalMoreThanVisible = totalItemCount >= QUERY_PAGE_SIZE
-            val shouldPaginate = isNotLoadingAndNotLastPage && isAtLastItem && isNotAtBeginning && isTotalMoreThanVisible && isScrolling
+            val shouldPaginate =
+                isNotLoadingAndNotLastPage && isAtLastItem && isNotAtBeginning && isTotalMoreThanVisible && isScrolling
 
-            if(shouldPaginate) {
+            if (shouldPaginate) {
                 viewModel.getBreakingNews("us")
                 isScrolling = false
             }
